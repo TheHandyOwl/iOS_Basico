@@ -56,11 +56,45 @@
     // Se trata de desactivar la vista extendida
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
+
+    // Alta en la notificación
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver: self
+               selector: @selector(photoDidChange:)
+                   name: WINE_CHANGE_PHOTO_NOTIFICATION_NAME
+                 object: nil];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    // Baja en la notificación (de todas en este caso)
+    // Estabamos escuchando si cargaba la foto
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Notifications
+
+-(void) photoDidChange: (NSNotification *) notification{
+    
+    NSDictionary *dict = [notification userInfo];
+    CCPWineModel *newWine = [dict objectForKey: WINE_PHOTO_KEY];
+    
+    for (UITableViewCell *cell in [self.tableView visibleCells]) {
+        if ([cell.textLabel text] == [newWine name]){
+            cell.imageView.image = newWine.photo;
+            if (cell.imageView.image == newWine.photo){
+                NSLog(@"Debería cambiar la foto, pero no: %@", cell.textLabel.text);
+            }
+        }
+        NSLog(@"%@", cell.textLabel.text);
+    }
+    
 }
 
 #pragma mark - Table view data source

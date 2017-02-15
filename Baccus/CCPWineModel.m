@@ -265,6 +265,11 @@
                 NSLog(@"Error al guardar foto: %@", photoFile);
             } else {
                 NSLog(@"Guardada la foto: %@", photoFile);
+                //Cuando tenemos la foto descargada, mandamos notificación al controlador
+                NSNotification *n = [NSNotification notificationWithName: WINE_CHANGE_PHOTO_NOTIFICATION_NAME
+                                                                  object: self
+                                                                userInfo: @{WINE_PHOTO_KEY: self}];
+                [[NSNotificationCenter defaultCenter] postNotification: n];
             }
         });
     });
@@ -331,6 +336,13 @@
             if (_photo){
                 NSLog(@"Encuentra foto en cache: %@", photoFile);
             }
+            
+            // El modelo envía un mensaje al controlador para que refresque la foto
+            NSNotification *n = [NSNotification notificationWithName: WINE_CHANGE_PHOTO_NOTIFICATION_NAME
+                                                              object: self
+                                                            userInfo: @{WINE_PHOTO_KEY: self}];
+            [[NSNotificationCenter defaultCenter] postNotification: n];
+            
         });
     });
 }

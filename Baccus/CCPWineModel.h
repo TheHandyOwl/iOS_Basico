@@ -11,6 +11,10 @@
 
 #define NO_RATING -1
 
+// Voy a crear un mensaje para indicar que se cargue nuevamente la foto
+#define WINE_CHANGE_PHOTO_NOTIFICATION_NAME @"changePhoto"
+#define WINE_PHOTO_KEY @"aWine"
+
 @interface CCPWineModel : NSObject
 
 //Propiedades
