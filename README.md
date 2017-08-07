@@ -8,5 +8,5 @@ Práctica del curso de Objective C durante la fase del preboot.
 
 # iOS_Basico
 
-  [repo]: https://github.com/TheHandyOwl/kciOS_Basico
+  [repo]: https://github.com/TheHandyOwl/iOS_Basico
   
